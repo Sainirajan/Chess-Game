@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    command: ["npm", "run", "start"]  # Start the app in production mode
+    depends_on:
+      - redis
+    restart: always  # Restart the app if it crashes
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    restart: always  # Restart Redis if it crashes
